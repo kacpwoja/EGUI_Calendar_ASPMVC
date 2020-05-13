@@ -6,14 +6,17 @@
 
 .bg2 {
     background-color: #457b9d;
+    color: white;
 }
 
 .bg3 {
     background-color: #a8dadc;
+    color: black;
 }
 
 .bg4 {
     background-color: #f1faee;
+    color: black;
 }
 
 .bg5 {
@@ -21,14 +24,16 @@
     color: black;
 }
 
-.text-chonk{
+.text-chonk {
+    background-color: inherit;
     font-size: 1.5rem;
     font-weight: 300;
 }
 
-.text-chonker{
+.text-chonker {
+    background-color: inherit;
     font-size: 2.0rem;
-    font-weight: 700;
+    font-weight: 300;
 }
 
 .hyperlink, .hyperlink:hover {
@@ -36,10 +41,22 @@
 }
 
 .calendar-day {
+    background-color: inherit;
+    color: black
 }
 
 .calendar-day-sun {
+    background-color: inherit;
     color: #e63946;
+}
+
+.calendar-day-today {
+    background-color: #a8dadc;
+    color: black;
+}
+
+.calendar-day-busy {
+    background-color: #f1faee;
 }
 
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification

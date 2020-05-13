@@ -38,9 +38,9 @@ namespace EGUI_Calendar.Controllers
                 vm = new IndexViewModel
                 {
                     Title = date.ToString("MMM - yyyy"),
-                    Offset = (int)date.DayOfWeek,
+                    Offset = (int)date.DayOfWeek - 1,
                     Days = DateTime.DaysInMonth(year.Value, month.Value),
-                    SelectedDay = isCurrent ? DateTime.Now.Day : 0,
+                    Today = isCurrent ? DateTime.Now.Day : 0,
                     BusyDays = events.GetBusyDays(year.Value, month.Value)
                 };
             }
@@ -48,7 +48,6 @@ namespace EGUI_Calendar.Controllers
             {
                 return DefaultRedirect();
             }
-
             return View(vm);
         }
 

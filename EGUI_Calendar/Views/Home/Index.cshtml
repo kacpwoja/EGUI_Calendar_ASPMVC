@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 @functions
@@ -58,7 +59,7 @@
     }
 }
 <!-- Calendar Header - title and navigation -->
-<div class="row bg2">
+<div class="row bg3">
     <div class="col">
         <a class="hyperlink" href=@Url.Action("Index", GetPreviousMonth())>
             <div class="text-chonker text-left">
@@ -76,14 +77,14 @@
     </div>
 </div>
 <!-- Calendar Header - Day Names -->
-<div class="row bg3">
-    <div class="col text-chonk">Mon</div>
-    <div class="col text-chonk">Tue</div>
-    <div class="col text-chonk">Wed</div>
-    <div class="col text-chonk">Thu</div>
-    <div class="col text-chonk">Fri</div>
-    <div class="col text-chonk">Sat</div>
-    <div class="col text-chonk calendar-day-sun">Sun</div>
+<div class="row text-chonk">
+    <div class="col">Mon</div>
+    <div class="col">Tue</div>
+    <div class="col">Wed</div>
+    <div class="col">Thu</div>
+    <div class="col">Fri</div>
+    <div class="col">Sat</div>
+    <div class="col calendar-day-sun">Sun</div>
 </div>
 <!-- Calendar Body -->
 <div class="row">
@@ -93,14 +94,18 @@
             <div class="row">
                 @for (var j = 0; j < 7; j++)
                 {
-                    var index = i * 7 + j + 1;
-                    var day = index - Model.Offset + 1;
+                    var index = i * 7 + j;
+                    var day = index - Model.Offset - 6;
 
                     <div class="col">
-                        @if (index >= Model.Offset && index < Model.Offset + Model.Days)
+                        @if (index >= Model.Offset + 7 && index < Model.Offset + Model.Days + 7)
                         {
-                            <a class="hyperlink" href=@Url.Action("Day")>
-                                <div class="w-100 h-100 text-chonk calendar-day">
+                            <a class="calendar-day
+                               @(index % 7 == 6 ? "calendar-day-sun" : "")
+                               @(Model.BusyDays.Contains(day) ? "calendar-day-busy" : "")
+                               @(day == Model.Today ? "calendar-day-today" : "")"
+                               href=@Url.Action("Day")>
+                                <div class="text-chonk">
                                     @day
                                 </div>
                             </a>
