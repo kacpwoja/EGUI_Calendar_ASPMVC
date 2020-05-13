@@ -1,4 +1,48 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿/* My CSS */
+.bg1 {
+    background-color: #1d3557;
+    color: white;
+}
+
+.bg2 {
+    background-color: #457b9d;
+}
+
+.bg3 {
+    background-color: #a8dadc;
+}
+
+.bg4 {
+    background-color: #f1faee;
+}
+
+.bg5 {
+    background-color: #e63946;
+    color: black;
+}
+
+.text-chonk{
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.text-chonker{
+    font-size: 2.0rem;
+    font-weight: 700;
+}
+
+.hyperlink, .hyperlink:hover {
+    color: inherit;
+}
+
+.calendar-day {
+}
+
+.calendar-day-sun {
+    color: #e63946;
+}
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
