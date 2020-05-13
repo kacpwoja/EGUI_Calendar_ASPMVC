@@ -1,4 +1,22 @@
-﻿<!DOCTYPE html>
+﻿@functions
+{
+    public object Today()
+    {
+        var d = DateTime.Today;
+        var year = d.Year;
+        var month = d.Month;
+        var day = d.Day;
+        return new
+        {
+            year,
+            month,
+            day
+        };
+    }
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,7 +29,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg2 border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Calendar</a>
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">Calendar</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,13 +37,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Day">Today</a>
+                            <a class="nav-link text-white" href=@Url.Action("Day", Today())>Today</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Event">New Event</a>
+                            <a class="nav-link text-white" href=@Url.Action("Event")>New Event</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Info">Info</a>
+                            <a class="nav-link text-white" href=@Url.Action("Info")>Info</a>
                         </li>
                     </ul>
                 </div>

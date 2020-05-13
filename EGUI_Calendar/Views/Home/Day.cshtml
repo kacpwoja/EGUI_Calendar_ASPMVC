@@ -1,3 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Day";
+﻿@model DayViewModel
+@{
+    ViewData["Title"] = Model.TitleShort;
 }
+
+<div class="text-chonker">
+    @Model.TitleLong
+</div>

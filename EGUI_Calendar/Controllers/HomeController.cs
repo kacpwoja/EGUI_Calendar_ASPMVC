@@ -23,10 +23,7 @@ namespace EGUI_Calendar.Controllers
 
         public IActionResult Index(int? year, int? month)
         {
-            if(!year.HasValue || !month.HasValue)
-            {
-                return DefaultRedirect();
-            }
+            if(!year.HasValue || !month.HasValue) return DefaultRedirect();
 
             IndexViewModel vm;
 
@@ -37,7 +34,7 @@ namespace EGUI_Calendar.Controllers
 
                 vm = new IndexViewModel
                 {
-                    Title = date.ToString("MMM - yyyy"),
+                    Title = date.ToString("MMMM yyyy"),
                     Offset = (int)date.DayOfWeek - 1,
                     Days = DateTime.DaysInMonth(year.Value, month.Value),
                     Today = isCurrent ? DateTime.Now.Day : 0,
@@ -63,7 +60,33 @@ namespace EGUI_Calendar.Controllers
 
         public IActionResult Day(int? year, int? month, int? day)
         {
-            return View();
+            if (!year.HasValue || !month.HasValue || !day.HasValue) return DefaultRedirect();
+
+            DayViewModel vm;
+
+            try
+            {
+                var date = new DateTime(year.Value, month.Value, day.Value);
+                var ev = events.GetEvents(year.Value, month.Value, day.Value);
+
+                vm = new DayViewModel
+                {
+                    TitleLong = date.ToString("dddd, d MMMM yyyy"),
+                    TitleShort = date.ToString("d MMM yyyy"),
+                    Events = ev.Select(o => new EventModel
+                    {
+                        ID = o.ID,
+                        Time = o.Time.TimeOfDay,
+                        Name = o.Name
+                    }).OrderBy(o => o.Time).ToArray()
+                };
+            }
+            catch
+            {
+                return DefaultRedirect();
+            }
+
+            return View(vm);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
