@@ -23,7 +23,11 @@ namespace EGUI_Calendar.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Info()
+        {
+            return View();
+        }
+        public IActionResult Event()
         {
             return View();
         }
