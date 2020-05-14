@@ -23,7 +23,7 @@ namespace EGUI_Calendar.Controllers
 
         public IActionResult Index(int? year, int? month)
         {
-            if(!year.HasValue || !month.HasValue) return DefaultRedirect();
+            if (!year.HasValue || !month.HasValue) return DefaultRedirect();
 
             IndexViewModel vm;
 
@@ -109,6 +109,65 @@ namespace EGUI_Calendar.Controllers
             }
 
             return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult New(TimeSpan? time, string name, int? year, int? month, int? day)
+        {
+            if (!year.HasValue || !month.HasValue || !day.HasValue) return DefaultRedirect();
+
+            if (time == null) time = new TimeSpan(0, 0, 0);
+            if (name == null) name = string.Empty;
+
+            try
+            {
+                var date = new DateTime(year.Value, month.Value, day.Value, time.Value.Hours, time.Value.Minutes, time.Value.Seconds);
+                events.AddEvent(date, name);
+            }
+            catch
+            {
+                return DefaultRedirect();
+            }
+
+            return RedirectToAction(nameof(Day), new { year, month, day });
+        }
+
+        [HttpPost]
+        public IActionResult Edit(TimeSpan? time, string name, int? year, int? month, int? day, Guid? id)
+        {
+            if (!year.HasValue || !month.HasValue || !day.HasValue) return DefaultRedirect();
+
+            if (time == null) time = new TimeSpan(0, 0, 0);
+            if (name == null) name = string.Empty;
+
+            try
+            {
+                var date = new DateTime(year.Value, month.Value, day.Value, time.Value.Hours, time.Value.Minutes, time.Value.Seconds);
+                events.Update(id.Value, date, name);
+            }
+            catch
+            {
+                return DefaultRedirect();
+            }
+
+            return RedirectToAction(nameof(Day), new { year, month, day });
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int? year, int? month, int? day, Guid? id)
+        {
+            if (!year.HasValue || !month.HasValue || !day.HasValue) return DefaultRedirect();
+
+            try
+            {
+                events.Remove(year.Value, month.Value, day.Value, id.Value);
+            }
+            catch
+            {
+                return DefaultRedirect();
+            }
+
+            return RedirectToAction(nameof(Day), new { year, month, day });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

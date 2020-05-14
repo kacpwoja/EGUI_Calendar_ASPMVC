@@ -1,3 +1,46 @@
-﻿@{
-    ViewData["Title"] = "Event";
+﻿@model EventViewModel
+@{
+    ViewData["Title"] = Model.Title;
 }
+@functions {
+    public object GetFullDate()
+    {
+        var year = int.Parse(Context.Request.Query["year"].ToString());
+        var month = int.Parse(Context.Request.Query["month"].ToString());
+        var day = int.Parse(Context.Request.Query["day"].ToString());
+
+        return new
+        {
+            year,
+            month,
+            day
+        };
+    }
+    public object GetEventRoute()
+    {
+        var year = int.Parse(Context.Request.Query["year"].ToString());
+        var month = int.Parse(Context.Request.Query["month"].ToString());
+        var day = int.Parse(Context.Request.Query["day"].ToString());
+        var id = Context.Request.Query["id"].ToString();
+
+        return new
+        {
+            year,
+            month,
+            day,
+            id
+        };
+    }
+}
+
+<div class="row bg3">
+    <div class="col text-chonker text-left">
+        <a class="hyperlink" href=@Url.Action("Day", GetFullDate())><</a>
+    </div>
+    <div class="col-10 text-chonker text-center">
+        @Model.Title
+    </div>
+    <div class="col text-chonker text-right">
+
+    </div>
+</div>
