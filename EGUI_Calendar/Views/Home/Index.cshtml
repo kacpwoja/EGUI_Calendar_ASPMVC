@@ -102,7 +102,7 @@
                         {
                             <a class="calendar-day
                                @(index % 7 == 6 ? "calendar-day-sun" : "")
-                               @(Model.BusyDays.Contains(day) ? "calendar-day-busy" : "")
+                               @(Model.BusyDays.Contains(day) && !(day == Model.Today) ? "calendar-day-busy" : "")
                                @(day == Model.Today ? "calendar-day-today" : "")"
                                href=@Url.Action("Day", GetDate(day))>
                                 <div class="text-chonk">

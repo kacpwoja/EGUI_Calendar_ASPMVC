@@ -44,3 +44,34 @@
 
     </div>
 </div>
+
+@using (Html.BeginForm(Model.Edit ? "Edit" : "New", "Home", Model.Edit ? GetEventRoute() : GetFullDate(), FormMethod.Post))
+{
+    <div class="row">
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-2 text-chonk">
+            Time
+        </div>
+        <div class="col text-chonk">
+            <input class="input" type="time" name="time" value="@(Model.Time)" required />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 text-chonk">
+            Name
+        </div>
+        <div class="col text-chonk">
+            <input class="input w-100" type="text" name="name" maxlength="150" value="@(Model.Name)" required />
+        </div>
+    </div>
+    <div class="row">
+        <br />
+    </div>
+    <div class="row">
+        <div class="col text-chonk">
+            <input class="hyperlink bg4" type="submit" value="OK" />
+        </div>
+    </div>
+}

@@ -28,13 +28,27 @@
             day
         };
     }
+    public object GetEventRoute(Guid id)
+    {
+        var year = int.Parse(Context.Request.Query["year"].ToString());
+        var month = int.Parse(Context.Request.Query["month"].ToString());
+        var day = int.Parse(Context.Request.Query["day"].ToString());
+
+        return new
+        {
+            year,
+            month,
+            day,
+            id
+        };
+    }
 }
 
 <div class="row bg3">
     <div class="col text-chonker text-left">
         <a class="hyperlink" href=@Url.Action("Index", GetDate())><</a>
     </div>
-    <div class="col-10 text-chonker text-center">
+    <div class="col-8 text-chonker text-center">
         @Model.TitleLong
     </div>
     <div class="col text-chonker text-right">
@@ -52,14 +66,20 @@
 @foreach (var e in Model.Events)
 {
     <div class="row">
-        <div class="col text-chonk text-left">
+        <div class="col-1 text-chonk text-left">
             @(e.Time.ToString(@"hh\:mm"))
         </div>
         <div class="col text-chonk text-left">
             @(e.Name)
         </div>
-        <div class="col text-chonk text-right">
-            Edit/Delete
+        <div class="col-1 text-chonk text-right">
+            <a class="hyperlink" href=@Url.Action("Event", GetEventRoute(e.ID))>Edit</a>
+        </div>
+        <div class="col-1 text-chonk text-right">
+            @using (Html.BeginForm("Delete", "Home", GetEventRoute(e.ID), FormMethod.Post))
+            {
+                <a class="hyperlink" href="#" onclick="this.parentNode.submit(); return false;">Delete</a>
+            }
         </div>
     </div>
 }
