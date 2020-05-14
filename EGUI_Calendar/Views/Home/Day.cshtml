@@ -2,7 +2,64 @@
 @{
     ViewData["Title"] = Model.TitleShort;
 }
+@functions
+{
+    public object GetDate()
+    {
+        var year = int.Parse(Context.Request.Query["year"].ToString());
+        var month = int.Parse(Context.Request.Query["month"].ToString());
 
-<div class="text-chonker">
-    @Model.TitleLong
+        return new
+        {
+            year,
+            month
+        };
+    }
+    public object GetFullDate()
+    {
+        var year = int.Parse(Context.Request.Query["year"].ToString());
+        var month = int.Parse(Context.Request.Query["month"].ToString());
+        var day = int.Parse(Context.Request.Query["day"].ToString());
+
+        return new
+        {
+            year,
+            month,
+            day
+        };
+    }
+}
+
+<div class="row bg3">
+    <div class="col text-chonker text-left">
+        <a class="hyperlink" href=@Url.Action("Index", GetDate())><</a>
+    </div>
+    <div class="col-10 text-chonker text-center">
+        @Model.TitleLong
+    </div>
+    <div class="col text-chonker text-right">
+        <a class="hyperlink" href=@Url.Action("Event", GetFullDate())>+</a>
+    </div>
 </div>
+@if (Model.Events.Length == 0)
+{
+    <div class="row">
+        <div class="col text-chonk text-left">
+            No Events.
+        </div>
+    </div>
+}
+@foreach (var e in Model.Events)
+{
+    <div class="row">
+        <div class="col text-chonk text-left">
+            @(e.Time.ToString(@"hh\:mm"))
+        </div>
+        <div class="col text-chonk text-left">
+            @(e.Name)
+        </div>
+        <div class="col text-chonk text-right">
+            Edit/Delete
+        </div>
+    </div>
+}

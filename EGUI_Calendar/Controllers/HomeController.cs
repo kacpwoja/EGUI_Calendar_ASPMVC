@@ -53,9 +53,31 @@ namespace EGUI_Calendar.Controllers
             return View();
         }
 
-        public IActionResult Event()
+        public IActionResult Event(int? year, int? month, int? day, Guid? id)
         {
-            return View();
+            if (!year.HasValue || !month.HasValue || !day.HasValue) return DefaultRedirect();
+            var edit = id.HasValue;
+
+            EventViewModel vm;
+
+            try
+            {
+                var date = new DateTime(year.Value, month.Value, day.Value);
+                var ev = edit ? events.GetEvent(year.Value, month.Value, day.Value, id.Value) : null;
+
+                vm = new EventViewModel
+                {
+                    Edit = edit,
+                    Title = edit ? ev.Name : "New Event",
+                    Time = edit ? ev.Time.ToString(@"HH\:mm") : "00:00",
+                    Name = edit ? ev.Name : ""
+                };
+            }
+            catch
+            {
+                return DefaultRedirect();
+            }
+            return View(vm);
         }
 
         public IActionResult Day(int? year, int? month, int? day)
